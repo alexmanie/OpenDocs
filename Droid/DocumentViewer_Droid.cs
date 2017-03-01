@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Android.Content;
+using Android.Support.V7.App;
 using OpenDocs.Droid;
 using Xamarin.Forms;
 
@@ -19,11 +20,6 @@ namespace OpenDocs.Droid
 
 			// This is where we copy the file
 			Console.WriteLine(path);
-
-			//if (!File.Exists(path))
-			//{
-			//	File.Copy(filename, path);
-			//}
 
 			if (!File.Exists(path))
 			{
@@ -48,11 +44,20 @@ namespace OpenDocs.Droid
 
 			try
 			{
+				{ 
+					new AlertDialog.Builder(Xamarin.Forms.Forms.Context)
+					               .SetTitle("path")
+					               .SetMessage(path)
+					               .Show();
+				}
+
+
 				Forms.Context.StartActivity(Intent.CreateChooser(intent, "Select App"));
 			}
 			catch (Exception ex)
 			{
 				//Let the user know when something went wrong
+				Console.WriteLine(ex.Message);
 			}
 		}
 
