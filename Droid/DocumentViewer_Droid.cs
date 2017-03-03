@@ -1,9 +1,14 @@
 ﻿using System;
 using System.IO;
+
 using Android.Content;
 using Android.Support.V7.App;
+using Android.Support.V4.Content;
+using Android.Support.V4.App;
 using OpenDocs.Droid;
 using Xamarin.Forms;
+using Android.App;
+
 
 [assembly: Dependency(typeof(DocumentViewer_Droid))]
 namespace OpenDocs.Droid
@@ -12,23 +17,27 @@ namespace OpenDocs.Droid
 	{
 		public void ShowDocumentFile(string filepath, string mimeType)
 		{
+			checkPermissions();
+
 			var filename = filepath;
-			string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal); // Documents folder
+			string documentsPath = Android.OS.Environment.ExternalStorageDirectory.Path; // External folder
 			var path = Path.Combine(documentsPath, filename);
 
 
 
 			// This is where we copy the file
-			Console.WriteLine(path);
+			Console.WriteLine("Path --->" + path);
+			Console.WriteLine("Filename --->" + filename);
 
 			if (!File.Exists(path))
 			{
+
 				var s = Forms.Context.Resources.OpenRawResource(Resource.Raw.slides);  // RESOURCE NAME ###
 
-			    // create a write stream
-			    FileStream writeStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
-			    // write to the stream
-			    ReadWriteStream(s, writeStream);
+				// create a write stream
+				FileStream writeStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+				// write to the stream
+				ReadWriteStream(s, writeStream);
 			}
 
 			if (!File.Exists(path))
@@ -44,12 +53,6 @@ namespace OpenDocs.Droid
 
 			try
 			{
-				{ 
-					new AlertDialog.Builder(Xamarin.Forms.Forms.Context)
-					               .SetTitle("path")
-					               .SetMessage(path)
-					               .Show();
-				}
 
 
 				Forms.Context.StartActivity(Intent.CreateChooser(intent, "Select App"));
@@ -61,6 +64,36 @@ namespace OpenDocs.Droid
 			}
 		}
 
+		private void checkPermissions()
+		{
+			const string readPermission = Android.Manifest.Permission.ReadExternalStorage;
+			const string writePermission = Android.Manifest.Permission.WriteExternalStorage;
+
+			if (ContextCompat.CheckSelfPermission(Xamarin.Forms.Forms.Context, readPermission) != (int)PermissionChecker.PermissionGranted
+			   || ContextCompat.CheckSelfPermission(Xamarin.Forms.Forms.Context, writePermission) != (int)PermissionChecker.PermissionGranted)
+			{
+				askForPermissions(readPermission);
+				askForPermissions(writePermission); //Might not be necessary
+			}
+
+		}
+
+		private void askForPermissions(String permission)
+		{
+			if (ActivityCompat.ShouldShowRequestPermissionRationale((Activity)Xamarin.Forms.Forms.Context, permission))
+			{
+
+				// Show an expanation to the user *asynchronously* -- don't block
+				// this thread waiting for the user's response! After the user
+				// sees the explanation, try again to request the permission
+			}
+			else
+			{
+				// No explanation needed, we can request the permission.
+				ActivityCompat.RequestPermissions((Activity)Xamarin.Forms.Forms.Context, new string[] { permission }, 1);
+			}
+
+		}
 		/// <summary>
 		/// helper method to get the database out of /raw/ and into the user filesystem
 		/// </summary>
