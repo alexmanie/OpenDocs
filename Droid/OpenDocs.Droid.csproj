@@ -126,6 +126,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\raw\ManageMyMoney1.xlsx" />
     <AndroidResource Include="Resources\raw\slides.pdf" />
+    <AndroidResource Include="Resources\raw\Document1.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\raw\" />

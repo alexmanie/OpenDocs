@@ -21,6 +21,16 @@ namespace OpenDocs
 		{
 			string filepath = "ManageMyMoney1.xlsx";
 			string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			//string mimeType = "application/vnd.ms-excel";
+
+			DependencyService.Get<IDocumentViewer>().ShowDocumentFile(filepath, mimeType);
+		}
+
+		void HandleWord_Clicked(object sender, System.EventArgs e)
+		{
+			string filepath = "Document1.docx";
+			string mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+			//string mimeType = "application/msword";
 
 			DependencyService.Get<IDocumentViewer>().ShowDocumentFile(filepath, mimeType);
 		}

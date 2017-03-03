@@ -3590,10 +3590,13 @@ namespace OpenDocs.Droid
 		{
 			
 			// aapt resource value: 0x7f070000
-			public const int ManageMyMoney1 = 2131165184;
+			public const int Document1 = 2131165184;
 			
 			// aapt resource value: 0x7f070001
-			public const int slides = 2131165185;
+			public const int ManageMyMoney1 = 2131165185;
+			
+			// aapt resource value: 0x7f070002
+			public const int slides = 2131165186;
 			
 			static Raw()
 			{

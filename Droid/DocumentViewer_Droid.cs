@@ -23,26 +23,28 @@ namespace OpenDocs.Droid
 			string documentsPath = Android.OS.Environment.ExternalStorageDirectory.Path; // External folder
 			var path = Path.Combine(documentsPath, filename);
 
-
-
 			// This is where we copy the file
 			Console.WriteLine("Path --->" + path);
 			Console.WriteLine("Filename --->" + filename);
 
+			if (File.Exists(path))
+				File.Delete(path);
+
 			if (!File.Exists(path))
 			{
+				Stream s = null;
 
-				var s = Forms.Context.Resources.OpenRawResource(Resource.Raw.slides);  // RESOURCE NAME ###
+				if (filepath.Contains(".pdf"))
+					s = Forms.Context.Resources.OpenRawResource(Resource.Raw.slides);
+				else if (filepath.Contains(".docx"))
+					s = Forms.Context.Resources.OpenRawResource(Resource.Raw.Document1);
+				else if (filepath.Contains(".xlsx"))
+					s = Forms.Context.Resources.OpenRawResource(Resource.Raw.ManageMyMoney1);
 
 				// create a write stream
 				FileStream writeStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
 				// write to the stream
 				ReadWriteStream(s, writeStream);
-			}
-
-			if (!File.Exists(path))
-			{
-				// ERROR
 			}
 
 			var uri = Android.Net.Uri.Parse("file://" + path);
@@ -53,8 +55,6 @@ namespace OpenDocs.Droid
 
 			try
 			{
-
-
 				Forms.Context.StartActivity(Intent.CreateChooser(intent, "Select App"));
 			}
 			catch (Exception ex)
@@ -75,7 +75,6 @@ namespace OpenDocs.Droid
 				askForPermissions(readPermission);
 				askForPermissions(writePermission); //Might not be necessary
 			}
-
 		}
 
 		private void askForPermissions(String permission)
