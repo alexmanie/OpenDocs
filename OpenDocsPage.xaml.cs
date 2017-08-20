@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Plugin.DeviceInfo;
+using Xamarin.Forms;
 
 namespace OpenDocs
 {
@@ -7,6 +8,10 @@ namespace OpenDocs
 		public OpenDocsPage()
 		{
 			InitializeComponent();
+
+			this.lblVersion.Text = CrossDeviceInfo.Current.Version;
+			this.lblPlatform.Text = CrossDeviceInfo.Current.Platform.ToString();
+
 		}
 
 		void HandlePDF_Clicked(object sender, System.EventArgs e)

@@ -8,7 +8,8 @@ namespace OpenDocs
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage( new OpenDocsPage());
+			//MainPage = new NavigationPage(new OpenDocsPage());
+			MainPage = new OpenDocsPage();
 		}
 
 		protected override void OnStart()

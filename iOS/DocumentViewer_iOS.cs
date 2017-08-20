@@ -33,22 +33,35 @@ namespace OpenDocs.iOS
 			var previewController = new QLPreviewController();
 			previewController.DataSource = new PreviewControllerDataSource(fileinfo.FullName, fileinfo.Name);
 
+			//For iOS 10.X onward & for iPhone u can use[[self.navigationController toolbar]
+			//setHidden:YES]; This is objective C code u can do similar in Your case.I am able to hide share/action button which appears at bottom using this line of Code.
 
-			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(previewController, true, null);
-			             
+			//var items = previewController.ToolbarItems;
+			//previewController.NavigationItem.RightBarButtonItem =null;
+
 			//UINavigationController controller = FindNavigationController();
 
 			//if (controller != null)
 			//{
 			//	controller.PresentViewController((UIViewController)previewController, true, (Action)null);
 			//}
+
+			// You can present the controller directly...
+			//this.Window.RootViewController = new UINavigationController(preview);
+
+			// ...or add its view to your own view hierarchy.
+			//this.Window.RootViewController = new UIViewController();
+			//this.Window.RootViewController.View.AddSubview(preview.View);
+
+
+			UIApplication.SharedApplication.KeyWindow.RootViewController.View.AddSubview(previewController.View);
+			UIApplication.SharedApplication.KeyWindow.RootViewController.ShowViewController(previewController, null);
+
+			//UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(previewController, true, null);
 		}
 
 		private UINavigationController FindNavigationController()
 		{
-
-
-
 			foreach (var window in UIApplication.SharedApplication.Windows)
 			{
 				if (window.RootViewController.NavigationController != null)
@@ -128,6 +141,8 @@ namespace OpenDocs.iOS
 		}
 
 		public override nint PreviewItemCount(QLPreviewController controller)
-		{ return (nint)1; }
+		{ 
+			return (nint)1; 
+		}
 	}
 }

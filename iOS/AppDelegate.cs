@@ -5,6 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
+
 namespace OpenDocs.iOS
 {
 	[Register("AppDelegate")]
@@ -13,6 +14,8 @@ namespace OpenDocs.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
+
+
 
 			LoadApplication(new App());
 

@@ -17,7 +17,7 @@ namespace OpenDocs.Droid
 	{
 		public void ShowDocumentFile(string filepath, string mimeType)
 		{
-			checkPermissions();
+			CheckPermissions();
 
 			var filename = filepath;
 			string documentsPath = Android.OS.Environment.ExternalStorageDirectory.Path; // External folder
@@ -64,7 +64,7 @@ namespace OpenDocs.Droid
 			}
 		}
 
-		private void checkPermissions()
+		private void CheckPermissions()
 		{
 			const string readPermission = Android.Manifest.Permission.ReadExternalStorage;
 			const string writePermission = Android.Manifest.Permission.WriteExternalStorage;
@@ -93,6 +93,7 @@ namespace OpenDocs.Droid
 			}
 
 		}
+
 		/// <summary>
 		/// helper method to get the database out of /raw/ and into the user filesystem
 		/// </summary>
